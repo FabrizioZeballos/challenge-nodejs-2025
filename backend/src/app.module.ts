@@ -30,8 +30,8 @@ import * as redisStore from 'cache-manager-ioredis';
       isGlobal: true,
       useFactory: () => ({
         store: redisStore,
-        host: 'localhost',
-        port: 6379,
+        host: process.env.REDIS_HOST,
+        port: process.env.REDIS_PORT,
         ttl: 30,
         db: 0,
       }),
