@@ -5,6 +5,8 @@ import sequelizeConfig from './config/sequelize';
 import { OrdersModule } from './modules/orders/orders.module';
 import { Order } from './models/order.model';
 import { OrderItem } from './models/order-item.model';
+import { CacheModule } from '@nestjs/cache-manager';
+import * as redisStore from 'cache-manager-ioredis';
 
 @Module({
   imports: [
@@ -23,6 +25,16 @@ import { OrderItem } from './models/order-item.model';
 
         return config;
       },
+    }),
+    CacheModule.registerAsync({
+      isGlobal: true,
+      useFactory: () => ({
+        store: redisStore,
+        host: 'localhost',
+        port: 6379,
+        ttl: 30,
+        db: 0,
+      }),
     }),
     OrdersModule,
     SequelizeModule.forFeature([Order, OrderItem]),
