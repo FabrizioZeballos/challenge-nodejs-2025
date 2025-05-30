@@ -25,10 +25,8 @@ services:
     image: postgres:15
     container_name: postgres
     restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 777fabri777
-      POSTGRES_DB: nestjs
+    env_file:
+      - ./.env
     ports:
       - "5433:5432"
     volumes:
