@@ -10,7 +10,7 @@ services:
       - redis
       - postgres
     env_file:
-      - ./.env
+      - ./backend/.env
     volumes:
       - ./backend:/app
     command: npm run start
@@ -26,7 +26,7 @@ services:
     container_name: postgres
     restart: always
     env_file:
-      - ./.env
+      - ./backend/.env
     ports:
       - "5433:5432"
     volumes:
