@@ -16,14 +16,14 @@ export class Order extends Model<
   InferCreationAttributes<Order>
 > {
   @Column({ type: DataType.STRING })
-  client_name: string;
+  declare client_name: string;
 
   @Column({ type: DataType.FLOAT })
-  total: number;
+  declare total: number;
 
   @Column({ type: DataType.STRING })
-  status: string;
+  declare status: string;
 
   @HasMany(() => OrderItem)
-  items?: OrderItem[];
+  declare items?: OrderItem[];
 }

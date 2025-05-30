@@ -17,18 +17,18 @@ export class OrderItem extends Model<
   InferCreationAttributes<OrderItem>
 > {
   @Column({ type: DataType.STRING })
-  description: string;
+  declare description: string;
 
   @Column({ type: DataType.INTEGER })
-  quantity: number;
+  declare quantity: number;
 
   @Column({ type: DataType.FLOAT })
-  unit_price: number;
+  declare unit_price: number;
 
   @ForeignKey(() => Order)
   @Column({ type: DataType.INTEGER })
-  orderId: number;
+  declare orderId: number;
 
   @BelongsTo(() => Order)
-  order?: Order;
+  declare order?: Order;
 }
