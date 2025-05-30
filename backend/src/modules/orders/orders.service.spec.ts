@@ -11,7 +11,6 @@ describe('OrdersService', () => {
   const mockOrder: Order = {
     id: 1,
     status: 'initiated',
-    // add other required properties here as per your Order model
     toJSON: () => ({ id: 1, status: 'initiated' }),
   } as Order;
 
@@ -28,7 +27,7 @@ describe('OrdersService', () => {
           useValue: ordersRepositoryMock,
         },
         {
-          provide: 'CACHE_MANAGER', // you can mock cacheManager if needed
+          provide: 'CACHE_MANAGER',
           useValue: {},
         },
       ],

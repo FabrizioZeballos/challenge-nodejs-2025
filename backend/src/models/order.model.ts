@@ -1,12 +1,4 @@
-import {
-  AutoIncrement,
-  Column,
-  DataType,
-  HasMany,
-  Model,
-  PrimaryKey,
-  Table,
-} from 'sequelize-typescript';
+import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
 import { OrderItem } from './order-item.model';
 import { InferAttributes, InferCreationAttributes } from 'sequelize';
 

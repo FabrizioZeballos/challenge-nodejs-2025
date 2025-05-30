@@ -1,11 +1,9 @@
 import {
-  AutoIncrement,
   BelongsTo,
   Column,
   DataType,
   ForeignKey,
   Model,
-  PrimaryKey,
   Table,
 } from 'sequelize-typescript';
 import { Order } from './order.model';
