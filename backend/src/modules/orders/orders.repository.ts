@@ -25,22 +25,13 @@ export class OrdersRepository extends OrdersRepositoryAbstract {
     });
   }
 
-  async findById(id: number): Promise<Order> {
-    const order = await this.orderModel.findByPk(id, {
+  async findById(id: number): Promise<Order | null> {
+    return await this.orderModel.findByPk(id, {
       include: [OrderItem],
     });
-
-    if (!order) throw new NotFoundException('Order not found');
-
-    return order;
   }
 
-  async create(orderData: CreateOrderDto): Promise<string> {
-    const total = orderData.items.reduce(
-      (sum, item) => sum + item.quantity * item.unitPrice,
-      0,
-    );
-
+  async create(orderData: CreateOrderDto, total: number): Promise<Order> {
     const order = await this.orderModel.create({
       client_name: orderData.clientName,
       status: 'initiated',
@@ -58,28 +49,22 @@ export class OrdersRepository extends OrdersRepositoryAbstract {
       ),
     );
 
-    return 'this.findById(order.id)';
+    return order;
   }
 
-  async advance(id: number): Promise<string> {
-    const order = await this.orderModel.findByPk(id);
-
-    if (!order) throw new NotFoundException('Order not found');
-
-    switch (order.status) {
-      case 'initiated':
-        order.status = 'sent';
-        await order.save();
-        return 'Order status updated to sent';
-
-      case 'sent':
-        await order.destroy();
-        return 'Order delivered and deleted';
-
-      default:
-        throw new BadRequestException(
-          `Cannot advance order with status: ${order.status}`,
-        );
+  async advance(order: Order): Promise<Order> {
+    if (order.status === 'initiated') {
+      order.status = 'sent';
+      await order.save();
+    } else if (order.status === 'sent') {
+      order.status = 'delivered';
+      await order.save();
     }
+
+    return order;
+  }
+
+  async deleteById(id: number): Promise<void> {
+    await this.orderModel.destroy({ where: { id } });
   }
 }
