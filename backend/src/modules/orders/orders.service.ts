@@ -81,6 +81,7 @@ export class OrdersService extends OrdersServiceAbstract {
 
     if (updatedOrder.status === 'delivered') {
       await this.ordersRepository.deleteById(updatedOrder.id);
+      await this.cacheManager.del('active-orders');
     }
 
     return updatedOrder;
